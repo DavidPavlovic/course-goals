@@ -5,18 +5,19 @@ import CourseInput from './components/CourseGoals/CourseInput/CourseInput';
 import './App.css';
 
 const App = () => {
-  const [courseGoals, setCourseGoals] = useState([
-    { text: 'Do all exercises!', id: 'g1' },
-    { text: 'Finish the course!', id: 'g2' }
-  ]);
+    
+    const lSGoals = JSON.parse(localStorage.getItem("goals") || "[]");
 
-  const addGoalHandler = enteredText => {
-    setCourseGoals(prevGoals => {
-      const updatedGoals = [...prevGoals];
-      updatedGoals.unshift({ text: enteredText, id: Math.random().toString() });
-      return updatedGoals;
-    });
-  };
+    const [courseGoals, setCourseGoals] = useState(lSGoals);
+
+    const addGoalHandler = enteredText => {
+        setCourseGoals(prevGoals => {
+            const updatedGoals = [...prevGoals];
+            updatedGoals.unshift({ text: enteredText, id: Math.random().toString() });
+            localStorage.setItem("goals", JSON.stringify(updatedGoals));
+            return updatedGoals;
+        });
+    };
 
   const deleteItemHandler = goalId => {
     setCourseGoals(prevGoals => {
